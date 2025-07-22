@@ -1,0 +1,39 @@
+{
+    "name": "lucascranach/timeline-texture-atlas",
+    "description": "PHP Service für die Erstellung von Texture Atlas aus Lucas Cranach API",
+    "type": "library",
+    "require": {
+        "php": ">=8.0",
+        "ext-gd": "*",
+        "ext-curl": "*",
+        "vlucas/phpdotenv": "^5.4",
+        "monolog/monolog": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LucasCranach\\TextureAtlas\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LucasCranach\\TextureAtlas\\Tests\\": "tests/"
+        }
+    },
+    "bin": [
+        "bin/generate-atlas.php"
+    ],
+    "scripts": {
+        "generate-atlas": "php bin/generate-atlas.php",
+        "atlas": "@generate-atlas",
+        "setup": [
+            "cp .env.example .env",
+            "echo 'Please edit .env file with your API credentials'"
+        ]
+    },
+    "config": {
+        "process-timeout": 900
+    }
+}
