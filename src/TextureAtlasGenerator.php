@@ -90,7 +90,8 @@ class TextureAtlasGenerator
                 'original_url' => $imageUrl,
                 'entity_type' => $work['entity_type'] ?? 'unknown',
                 'inventory_number	' => $work['inventory_number'] ?? null,
-                'title' => $work['title'] ?? null
+                'title' => $work['title'] ?? null,
+                'sorting_number' => $work['sorting_number'] ?? null
             ];
         }
         
