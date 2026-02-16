@@ -20,10 +20,8 @@ class ApiClient
     /**
      * Holt alle Werke aus der Lucas Cranach API
      */
-    public function fetchWorks(): array
+    public function fetchWorks(string $url): array
     {
-        $url = 'https://mivs02.gm.fh-koeln.de/works?language=de&is_published=true&size=5000';
-        
         $this->logger->info('Fetching works from API', ['url' => $url]);
         
         $ch = curl_init();

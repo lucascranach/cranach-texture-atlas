@@ -38,16 +38,23 @@ class TextureAtlasGenerator
             mkdir($this->outputDir, 0755, true);
         }
         
-        // 1. API-Daten laden
-        $works = $this->apiClient->fetchWorks();
+        // 1. API-Daten laden (deutsch und englisch)
+        $baseUrl = 'https://mivs02.gm.fh-koeln.de/works?is_published=true&size=5000&language=';
+        
+        $worksDE = $this->apiClient->fetchWorks($baseUrl . 'de');
+        $worksEN = $this->apiClient->fetchWorks($baseUrl . 'en');
+                
+        $this->logger->info('Loaded works in both languages', [
+            'german' => count($worksDE),
+            'english' => count($worksEN),
+        ]);
 
-        var_dump($works);
         
         // 2. Bilder verarbeiten
         $processedImages = [];
         $atlasData = [];
         
-        foreach ($works as $index => $work) {
+        foreach ($worksDE as $index => $work) {
             var_dump($work['img_src']);
 
             if (!isset($work['img_src']) || empty($work['img_src'])) {
@@ -63,7 +70,7 @@ class TextureAtlasGenerator
             
             $this->logger->info("Processing image", [
                 'index' => $index + 1,
-                'total' => count($works),
+                'total' => count($worksDE),
                 'url' => $imageUrl
             ]);
             
@@ -90,10 +97,15 @@ class TextureAtlasGenerator
                 'original_url' => $imageUrl,
                 'entity_type' => $work['entity_type'] ?? 'unknown',
                 'inventory_number	' => $work['inventory_number'] ?? null,
-                'title' => $work['title'] ?? null,
+                'title' => [
+                    'de' => $work['title'] ?? null,
+                    'en' => $worksEN[$index]['title'] ?? null
+                ],
                 'sorting_number' => $work['sorting_number'] ?? null
             ];
+            $this->logger->info("atlasData", $atlasData);
         }
+
         
         if (empty($processedImages)) {
             throw new \Exception("No images were successfully processed");
