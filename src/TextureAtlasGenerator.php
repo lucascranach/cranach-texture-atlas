@@ -39,7 +39,7 @@ class TextureAtlasGenerator
         }
         
         // 1. API-Daten laden (deutsch und englisch)
-        $baseUrl = 'https://mivs02.gm.fh-koeln.de/works?is_published=true&size=5000&language=';
+        $baseUrl = 'https://mivs02.gm.fh-koeln.de/works?is_published=true&size=8000&language=';
         
         $worksDE = $this->apiClient->fetchWorks($baseUrl . 'de');
         $worksEN = $this->apiClient->fetchWorks($baseUrl . 'en');
